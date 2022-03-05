@@ -96,44 +96,50 @@
 <div class="content">
 
 <?php
-    $headline = 'Herzlich Wilkommen';
-    $Contacts = [];
+     $headline = 'Herzlich willkommen';
+     $contacts = [];
 
-    if(isset($POST['name']) && isset($Post['phone'])){
-        echo 'Kontakt wurde hinzugefügt';
+    if (isset($_POST['name']) && isset($_POST['phone'])) {
+                echo 'Kontakt <b>' . $_POST['name'] . '</b> wurde hinzugefügt';
     }
 
-    if ($_GET['page'] == 'contacts') {
+    if ($_GET["page"] == "contacts") {
         $headline = 'Deine Kontakte';
     }
-    if ($_GET['page'] == 'legal') {
-        $headline = 'Impressum';
-    }
+
     if ($_GET['page'] == 'addcontact') {
         $headline = 'Kontakt hinzufügen';
+    }
+
+    if ($_GET['page'] == 'legal') {
+        $headline = 'Impressum';
     }
     echo '<h1> ' . $headline . '</h1>';
 
 if ($_GET['page'] == 'contacts') {
-    echo '<p> Auf dieser Seite hast du eine Übersicht über deine Kontakte </p>';
+    echo "
+        <p>Auf dieser Seite hast du einen Überblick über deine <b>Kontakte</b></p>
+    ";
 } else if ($_GET['page'] == 'legal') {
     echo 'Hier kommt das Impressum hin';
 } else if ($_GET['page'] == 'addcontact') {
-echo '<div> Auf dieser Seite kannst du einen weiteren Kontakt hinzufügen </div> 
-<form action="?page=contacts" methond="POST">
-    <div>
-    <input placeholder="Namen eingeben..." name="name">
-    </div>
-    <div>
-    <input placeholder="Telefonnummer eingeben..." name="phone">
-    </div>
-    <button type="submit">Absenden</button>
-    </form>';
-}
-
-else {
-    echo 'Du bist gerade auf der Start-Seite!';
-}
+                echo "
+                    <div>
+                        Auf dieser Seite kannst du einen weiteren Kontakt hinzufügen
+                    </div>
+                    <form action='?page=contacts' method='POST'>
+                        <div>
+                            <input placeholder='Name eingeben' name='name'>
+                        </div>
+                        <div>
+                            <input placeholder='Telefonnummer eingeben' name='phone'> 
+                        </div>
+                        <button type='Submit'>Absenden</button>
+                    </form>
+                ";
+            } else {
+                echo 'Du bist auf der Startseite!';
+            }
 ?>
 </div>
 </div>
