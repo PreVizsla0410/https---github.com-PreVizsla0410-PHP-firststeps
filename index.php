@@ -101,7 +101,14 @@
 
     if (isset($_POST['name']) && isset($_POST['phone'])) {
                 echo 'Kontakt <b>' . $_POST['name'] . '</b> wurde hinzugefügt';
+                $newContact = [
+                    'name' => $_POST['name'],
+                    'phone' => $_POST['phone']
+                ];
+                array_push($contacts, $newContact);
+                file_put_contents('contacts.txt', json_encode($contacts)); 
     }
+    /*Mit dem Code werden die Eingaben in gespeichert und in einer Json Datei erstellt; Push ist dabei gleich und file_put_contents ist neu, json enccode brauchen wir um den Kontakt in JSON zu übersetzen*/
 
     if ($_GET["page"] == "contacts") {
         $headline = 'Deine Kontakte';
