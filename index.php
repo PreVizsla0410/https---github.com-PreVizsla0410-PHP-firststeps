@@ -9,28 +9,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
     <title>PHP Projekt</title>
     <style>
-        body {
-            margin: 0;
+      body {
             font-family: 'Gowun Dodum', sans-serif;
-            background-color: grey;
+            background-color: #EAEDF8;
+            margin: 0;
         }
+
         .footer {
             padding: 100px;
             text-align: center;
-            background-color: blue;
+            background-color: #343434;
             color: white;
             margin-top: 300px;
         }
+
         .main {
             display: flex;
         }
+
         .menu {
             width: 20%;
-            background-color: red;
+            background-color: #746CF5;
             margin-right: 32px;
             padding-top: 150px;
             height: 100vh;
         }
+
         .menu a {
             display: block;
             text-decoration: none;
@@ -39,21 +43,25 @@
             display: flex;
             align-items: center;
         }
-        .menu a:hover {
-            background-color: white;
-            opacity: 0.1;
-        }
+
         .menu img {
             margin-right: 8px;
         }
+
+        .menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
         .content {
             width: 80%;
-            margin-top: 150px;
+            margin-top: 120px;
+            margin-right: 32px;
             background-color: white;
             border-radius: 8px;
             padding: 16px;
-            box-shadow: 2px 2px 2px black;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
         }
+
         .menubar {
             background-color: white;
             position: absolute;
@@ -66,6 +74,7 @@
             display: flex;
             justify-content: space-between;
         }
+
         .avatar {
             border-radius: 100%;
             background-color: yellowgreen;
@@ -76,6 +85,45 @@
             justify-content: center;
             align-items: center;
             margin-right: 8px;
+        }
+
+        .myname {
+            display: flex;
+            align-items: center;
+            margin-right: 50px;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            padding: 8px;
+            padding-left: 64px;
+            position: relative;
+        }
+
+        .profile-picture {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            left: 8px;
+        }
+
+        .phonebtn {
+            background-color: #999900;
+            padding: 4px;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+        .phonebtn:hover {
+            background-color: #26d026;
         }
         </style>
 </head>
@@ -99,6 +147,11 @@
      $headline = 'Herzlich willkommen';
      $contacts = [];
 
+     if(file_exists('contacts.txt')) {
+        $text = file_get_contents('contacts.txt', true);
+        $contacts = json_decode($text, true);
+    }
+
     if (isset($_POST['name']) && isset($_POST['phone'])) {
                 echo 'Kontakt <b>' . $_POST['name'] . '</b> wurde hinzugefügt';
                 $newContact = [
@@ -106,7 +159,7 @@
                     'phone' => $_POST['phone']
                 ];
                 array_push($contacts, $newContact);
-                file_put_contents('contacts.txt', json_encode($contacts)); 
+                file_put_contents('contacts.txt', json_encode($contacts, JSON_PRETTY_PRINT)); 
     }
     /*Mit dem Code werden die Eingaben in gespeichert und in einer Json Datei erstellt; Push ist dabei gleich und file_put_contents ist neu, json enccode brauchen wir um den Kontakt in JSON zu übersetzen*/
 
@@ -127,6 +180,20 @@ if ($_GET['page'] == 'contacts') {
     echo "
         <p>Auf dieser Seite hast du einen Überblick über deine <b>Kontakte</b></p>
     ";
+
+    foreach($contacts as $row) {
+        $name = $row['name'];
+        $phone = $row['phone'];
+
+        echo "<div class='card'>
+        <img class='profile-picture' src='https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'>
+        $name <br> 
+        $phone
+        
+        <a class='phonebtn' href='tel:$phone'>Anrufen</a>
+        </div>";
+    }
+
 } else if ($_GET['page'] == 'legal') {
     echo 'Hier kommt das Impressum hin';
 } else if ($_GET['page'] == 'addcontact') {

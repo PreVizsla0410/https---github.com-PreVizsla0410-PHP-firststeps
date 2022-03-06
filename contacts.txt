@@ -1,1 +1,14 @@
-[{"name":"Dorftrottel","phone":"0652 35545"}]
+[
+    {
+        "name": "Dorftrottel",
+        "phone": "0652 35545"
+    },
+    {
+        "name": "fsdgfs",
+        "phone": "sggfs"
+    },
+    {
+        "name": "Sabine Neuer",
+        "phone": "394893"
+    }
+]
